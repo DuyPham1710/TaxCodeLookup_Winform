@@ -1,0 +1,17 @@
+D:\CODE\C#\TestWinform\TestWinform\obj\Debug\TestWinform.csproj.AssemblyReference.cache
+D:\CODE\C#\TestWinform\TestWinform\obj\Debug\TestWinform.Form1.resources
+D:\CODE\C#\TestWinform\TestWinform\obj\Debug\TestWinform.Properties.Resources.resources
+D:\CODE\C#\TestWinform\TestWinform\obj\Debug\TestWinform.csproj.GenerateResource.cache
+D:\CODE\C#\TestWinform\TestWinform\obj\Debug\TestWinform.csproj.CoreCompileInputs.cache
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\TestWinform.exe.config
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\TestWinform.exe
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\TestWinform.pdb
+D:\CODE\C#\TestWinform\TestWinform\obj\Debug\TestWinform.exe
+D:\CODE\C#\TestWinform\TestWinform\obj\Debug\TestWinform.pdb
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\Newtonsoft.Json.dll
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\Newtonsoft.Json.xml
+D:\CODE\C#\TestWinform\TestWinform\obj\Debug\TestWinform.csproj.CopyComplete
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\HtmlAgilityPack.dll
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\HtmlAgilityPack.pdb
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\HtmlAgilityPack.xml
+D:\CODE\C#\TestWinform\TestWinform\obj\Debug\TestWinform.Home.resources
