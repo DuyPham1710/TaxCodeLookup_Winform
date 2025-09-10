@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestWinform.Constants;
 using TestWinform.models;
 
 namespace TestWinform
@@ -31,7 +32,7 @@ namespace TestWinform
         {
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:7111/api/Tax/getAll");
+                HttpResponseMessage response = await _httpClient.GetAsync($"{GlConstants.BASE_URL}/getAll");
                 if (response.IsSuccessStatusCode)
                 {
                     var responseJson = await response.Content.ReadAsStringAsync();

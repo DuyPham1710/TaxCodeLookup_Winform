@@ -10,15 +10,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using TestWinform.Constants;
 using TestWinform.dto;
 using TestWinform.models;
+using TestWinform.utils;
 
 namespace TestWinform
 {
     public partial class Form1 : Form
     {
         private readonly HttpClient _httpClient;
-     //   private string _sessionId;
+        private string _sessionId;
         private CompanyInfo _companyInfo;
         public Form1()
         {
@@ -30,53 +32,26 @@ namespace TestWinform
         {
             ConfigureGridView();
             await getCaptcha();
+            lblCaptcha.Visible = false;
         }
 
         private async Task getCaptcha()
         {
-            try
-            {
-                HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:7111/api/Tax/captcha");
-                if (response.IsSuccessStatusCode)
-                {
-                    var responseJson = await response.Content.ReadAsStringAsync();
-                    var result = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseJson);
-                    if (result != null && result.ContainsKey("captcha"))
-                    {
-                        lblCaptcha.Text = result["captcha"];
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không lấy được mã captcha");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show($"Lỗi: {response.StatusCode}");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Exception: {ex.Message}");
-            }
             //try
             //{
-            //    HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:7111/api/tax/captcha");
+            //    HttpResponseMessage response = await _httpClient.GetAsync($"{GlConstants.BASE_URL}/captcha");
             //    if (response.IsSuccessStatusCode)
             //    {
-            //        lấy sessionId từ header
-            //        if (response.Headers.Contains("X-Session-Id"))
+            //        var responseJson = await response.Content.ReadAsStringAsync();
+            //        var result = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseJson);
+            //        if (result != null && result.ContainsKey("captcha"))
             //        {
-            //            _sessionId = response.Headers.GetValues("X-Session-Id").FirstOrDefault();
+            //            lblCaptcha.Text = result["captcha"];
+
             //        }
-
-            //        đọc bytes của ảnh captcha
-            //       var imgBytes = await response.Content.ReadAsByteArrayAsync();
-
-            //        using (var ms = new MemoryStream(imgBytes))
+            //        else
             //        {
-            //            pictureBoxCaptcha.Image = Image.FromStream(ms);
+            //            MessageBox.Show("Không lấy được mã captcha");
             //        }
             //    }
             //    else
@@ -88,6 +63,40 @@ namespace TestWinform
             //{
             //    MessageBox.Show($"Exception: {ex.Message}");
             //}
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{GlConstants.BASE_URL}/captcha");
+                if (response.IsSuccessStatusCode)
+                {
+                   // lấy sessionId từ header
+                    if (response.Headers.Contains("X-Session-Id"))
+                    {
+                        _sessionId = response.Headers.GetValues("X-Session-Id").FirstOrDefault();
+                    }
+                    Console.WriteLine("SessionId: " + _sessionId);
+                    //   đọc bytes của ảnh captcha
+                    var imgBytes = await response.Content.ReadAsByteArrayAsync();
+
+                    using (var ms = new MemoryStream(imgBytes))
+                    {
+                        Image img = Image.FromStream(ms);
+                        pictureBoxCaptcha.Image = img;
+
+                        string captchaText = Helper.ReadCaptchaFromImage(img);
+                        txtCaptcha.Text = captchaText;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                MessageBox.Show($"Exception: {ex.Message}");
+            }
         }
 
         private void ConfigureGridView()
@@ -210,19 +219,23 @@ namespace TestWinform
                 captcha = captchaCode
             };
 
-            if (captchaCode != txtCaptcha.Text.Trim())
-            {
-                MessageBox.Show("Mã captcha không đúng, vui lòng thử lại.");
-                await getCaptcha();
-                return;
-            }
+            //if (captchaCode != txtCaptcha.Text.Trim())
+            //{
+            //    MessageBox.Show("Mã captcha không đúng, vui lòng thử lại.");
+            //    await getCaptcha();
+            //    return;
+            //}
 
             string json = JsonConvert.SerializeObject(requestObj);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             try
             {
-                HttpResponseMessage response = await _httpClient.PostAsync("https://localhost:7111/api/Tax/lookup-company", content);
+                // gán sessionId vào header trước khi gọi API
+                _httpClient.DefaultRequestHeaders.Remove("X-Session-Id");
+                _httpClient.DefaultRequestHeaders.Add("X-Session-Id", _sessionId);
+
+                HttpResponseMessage response = await _httpClient.PostAsync($"{GlConstants.BASE_URL}/lookup-company", content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -271,7 +284,7 @@ namespace TestWinform
                 NullValueHandling = NullValueHandling.Ignore
             });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _httpClient.PostAsync("https://localhost:7111/api/Tax/save-enterprise", content);
+            HttpResponseMessage response = await _httpClient.PostAsync($"{GlConstants.BASE_URL}/save-enterprise", content);
 
             if (response.IsSuccessStatusCode)
             {
@@ -304,6 +317,15 @@ namespace TestWinform
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void txtInput_TextChanged(object sender, EventArgs e)
+        {
+            if (txtInput.Text.Length >= 10)
+            {
+                btnFind_Click(sender, e);
+            }
+           
         }
     }
 }

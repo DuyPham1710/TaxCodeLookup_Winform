@@ -67,11 +67,12 @@
             this.txtInput.Name = "txtInput";
             this.txtInput.Size = new System.Drawing.Size(174, 22);
             this.txtInput.TabIndex = 1;
+            this.txtInput.TextChanged += new System.EventHandler(this.txtInput_TextChanged);
             // 
             // btnFind
             // 
             this.btnFind.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.btnFind.Location = new System.Drawing.Point(652, 26);
+            this.btnFind.Location = new System.Drawing.Point(294, 71);
             this.btnFind.Name = "btnFind";
             this.btnFind.Size = new System.Drawing.Size(112, 41);
             this.btnFind.TabIndex = 2;
@@ -137,9 +138,9 @@
             // 
             // pictureBoxCaptcha
             // 
-            this.pictureBoxCaptcha.Location = new System.Drawing.Point(795, 12);
+            this.pictureBoxCaptcha.Location = new System.Drawing.Point(647, 26);
             this.pictureBoxCaptcha.Name = "pictureBoxCaptcha";
-            this.pictureBoxCaptcha.Size = new System.Drawing.Size(251, 90);
+            this.pictureBoxCaptcha.Size = new System.Drawing.Size(192, 76);
             this.pictureBoxCaptcha.TabIndex = 5;
             this.pictureBoxCaptcha.TabStop = false;
             // 
@@ -147,7 +148,7 @@
             // 
             this.lblCaptcha.AutoSize = true;
             this.lblCaptcha.Font = new System.Drawing.Font("Viner Hand ITC", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCaptcha.Location = new System.Drawing.Point(644, 80);
+            this.lblCaptcha.Location = new System.Drawing.Point(1239, 57);
             this.lblCaptcha.Name = "lblCaptcha";
             this.lblCaptcha.Size = new System.Drawing.Size(92, 45);
             this.lblCaptcha.TabIndex = 4;

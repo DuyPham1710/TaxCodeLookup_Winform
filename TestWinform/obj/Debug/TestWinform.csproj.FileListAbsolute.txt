@@ -15,3 +15,9 @@ D:\CODE\C#\TestWinform\TestWinform\bin\Debug\HtmlAgilityPack.dll
 D:\CODE\C#\TestWinform\TestWinform\bin\Debug\HtmlAgilityPack.pdb
 D:\CODE\C#\TestWinform\TestWinform\bin\Debug\HtmlAgilityPack.xml
 D:\CODE\C#\TestWinform\TestWinform\obj\Debug\TestWinform.Home.resources
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\x86\leptonica-1.82.0.dll
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\x86\tesseract50.dll
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\x64\leptonica-1.82.0.dll
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\x64\tesseract50.dll
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\Tesseract.dll
+D:\CODE\C#\TestWinform\TestWinform\bin\Debug\tessdata\eng.traineddata
